@@ -107,7 +107,7 @@ BEGIN
   --------------------------------------------------------------------
   stimulus : PROCESS
   
-    -- Procédure CORRIGÉE : Pulse d'UN SEUL cycle d'horloge
+    -- Procédure : Pulse d'UN SEUL cycle d'horloge
     PROCEDURE entree_voiture IS
     BEGIN
       REPORT ">>> Voiture arrive à l'entrée (Places: " & INTEGER'IMAGE(places_disponibles) & ")";
@@ -158,7 +158,7 @@ BEGIN
       END IF;
     END PROCEDURE;
 
-    -- Procédure CORRIGÉE pour sortie (pulse d'1 cycle)
+    -- Procédure pour sortie (pulse d'1 cycle)
     PROCEDURE sortie_voiture IS
     BEGIN
       REPORT "<<< Voiture demande à sortir";
