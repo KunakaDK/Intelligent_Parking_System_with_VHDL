@@ -5,10 +5,10 @@ use IEEE.NUMERIC_STD.ALL;
 entity sevenseg_counter is
     Port (
         clk     : in  STD_LOGIC;                    -- horloge 50 MHz
-        rst   : in  STD_LOGIC;                    -- reset actif à 1
+        rst   : in  STD_LOGIC;                    -- reset actif Ã  1
         count_in: in  UNSIGNED(6 downto 0);         -- valeur 0-99
-        cathode : out STD_LOGIC_VECTOR(3 downto 0); -- cathodes (actif à 1)
-        seg     : out STD_LOGIC_VECTOR(6 downto 0)  -- segments (actif à 1)
+        cathode : out STD_LOGIC_VECTOR(3 downto 0); -- cathodes (actif Ã  1)
+        seg     : out STD_LOGIC_VECTOR(6 downto 0)  -- segments (actif Ã  1)
     );
 end sevenseg_counter;
 
@@ -24,7 +24,7 @@ architecture rtl of sevenseg_counter is
     
 begin
     --------------------------------------------------------------------
-    -- 1) Compteur pour le multiplexage (rafraîchissement des digits)
+    -- 1) Compteur pour le multiplexage (rafraÃ®chissement des digits)
     --------------------------------------------------------------------
     process(clk, rst)
     begin
@@ -46,7 +46,7 @@ begin
     begin
         v := to_integer(count_in);
         
-        -- Limitation à 99 (sécurité)
+        -- Limitation Ã  99 (sÃ©curitÃ©)
         if v > 99 then 
             v := 99;
         end if;
@@ -59,7 +59,7 @@ begin
     end process;
     
     --------------------------------------------------------------------
-    -- 3) Sélection du digit + masquage du zéro en tête
+    -- 3) SÃ©lection du digit + masquage du zÃ©ro en tÃªte
     --------------------------------------------------------------------
     process(digit_sel, d_units, d_tens, count_in)
         variable v_int : integer range 0 to 99;
@@ -67,25 +67,24 @@ begin
         v_int := to_integer(count_in);
         
         if digit_sel = '0' then
-            -- Unités (toujours affiché)
+            -- UnitÃ©s (toujours affichÃ©)
             cathode <= "0001";
             current_bcd <= d_units;
         else
-            -- Dizaines (masqué si < 10)
+            -- Dizaines (masquÃ© si < 10)
             cathode <= "0010";
             if v_int < 10 then
-                current_bcd <= "1111"; -- éteint
+                current_bcd <= "1111"; -- Ã©teint
             else
                 current_bcd <= d_tens;
             end if;
         end if;
         
-        -- Digits 3 et 4 toujours éteints
-        -- (pas besoin de les multiplexer)
+        -- Digits 3 et 4 toujours Ã©teints
     end process;
     
     --------------------------------------------------------------------
-    -- 4) Décodage BCD vers 7 segments (actif à 1)
+    -- 4) DÃ©codage BCD vers 7 segments (actif Ã  1)
     --------------------------------------------------------------------
     process(current_bcd)
     begin
@@ -100,8 +99,9 @@ begin
             when "0111" => seg <= "1110000"; -- 7
             when "1000" => seg <= "1111111"; -- 8
             when "1001" => seg <= "1111011"; -- 9
-            when others => seg <= "0000000"; -- éteint
+            when others => seg <= "0000000"; -- Ã©teint
         end case;
     end process;
     
+
 end rtl;
